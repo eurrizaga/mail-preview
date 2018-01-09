@@ -5,8 +5,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LoginForm from './sections/LoginForm';
 import MainSection from './sections/MainSection';
-import SecondarySection from './sections/SecondarySection';
-import PrivateRoute from '../route/PrivateRoute';
+import PrivateRoute from './PrivateRoute';
 import { getActiveUser } from '../actions';
 
 //Actions:
@@ -25,7 +24,6 @@ class newComponent extends Component {
         
     render(){
         const renderFields = () => {
-            console.log(this.props.activeUser)
             if (!this.props.activeUser && (this.props.activeUser !== false))
                 return (
                     <div>Loading...</div>
@@ -35,7 +33,6 @@ class newComponent extends Component {
                     
                         <Switch>
                             <Route path="/login" component={LoginForm} activeUser={this.props.activeUser}/>
-                            <PrivateRoute path="/secondary" component={SecondarySection} activeUser={this.props.activeUser}/>
                             <PrivateRoute path="/" component={MainSection} activeUser={this.props.activeUser}/>
 
                         </Switch>

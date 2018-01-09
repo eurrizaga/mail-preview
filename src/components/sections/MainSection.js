@@ -80,8 +80,13 @@ class mainSection extends Component {
                 selectedMail: newState
             })
         }
-        const changeMailLanguage = (event, value) => {
-            console.log(event.target.value);
+        const changeMailLanguage = (event, target) => {
+            var alteredState = this.state.selectedMail;
+            alteredState.selectedLanguage = target.value;
+            this.setState({
+                selectedMail: alteredState
+            })
+
         }
         var selectedMail = this.state.selectedMail;
         if (selectedMail && !selectedMail.selectedLanguage){

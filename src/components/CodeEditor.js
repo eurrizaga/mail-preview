@@ -18,14 +18,14 @@ class newComponent extends Component {
             languages = this.props.selectedMail.mailroom_template_language.map((language) => {
                 return {
                     key: language.language_id,
-                    value: language.language_iso2, 
+                    value: this.props.selectedMail.mailroom_template_language.indexOf(language),
                     text: language.language_name
                 }
             });
         }
         else
             languages = [];
-            
+        console.log(this.props.selectedMail);
         return (
             <div className="height-100"> 
                 <h2> Código fuente </h2>

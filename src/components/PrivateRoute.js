@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { Sidebar, Segment, Button } from 'semantic-ui-react';
-import  SidebarMenu from '../components/SidebarMenu';
 
 class PrivateRoute extends React.Component {
     constructor(props){
@@ -15,6 +13,7 @@ class PrivateRoute extends React.Component {
         };
     }
     isAuthenticated(){
+        console.log(this.props.activeUser)
         if (this.props.activeUser){
             return true;
         }
@@ -34,9 +33,7 @@ class PrivateRoute extends React.Component {
         const renderRoute = props => {
             if (this.isAuthenticated()) {
                 return (
-                    
                     <Component {...props} activeUser={this.props.activeUser}/>
-                    
                 );
             }
 
