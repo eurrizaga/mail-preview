@@ -10,10 +10,10 @@ const axiosInit = () => {
         timeout: 10000,
         headers: {'Content-Type': 'application/json'}
     };
-    userToken = localStorage.getItem('reactToken');
-    if (userToken){
-        axiosRequest.headers.Authorization = `${userToken}`;
-    }
+    // userToken = localStorage.getItem('reactToken');
+    // if (userToken){
+    //     axiosRequest.headers.Authorization = `${userToken}`;
+    // }
     ajax = axios.create(axiosRequest);
 }
 
@@ -68,6 +68,11 @@ function logout(callback){
         callback();
     });
 }
+function clearToken(){
+    localStorage.removeItem('reactToken');
+    activeUser = null;
+    axiosInit();
+}
 function validToken(callback){
     return new Promise((resolve, reject) => {
         ajax.post(`/validToken`)
@@ -77,31 +82,68 @@ function validToken(callback){
                     resolve(response.data.data)
                 }
                 else {
+                    clearToken();
                     callback(response);
                     reject(response);
                 }
 
             })
             .catch((response) => {
+                clearToken();
                 callback(response);
                 reject(response);
             })
         })
 
 }
-function post(path, body, callback){
+function post(path, body, callback, callbackFail){
     return new Promise((resolve, reject) => {
         ajax.post(path, body)
             .then((response) => {
                 callback(response);
                 resolve(response);
             })
+            .catch((response) => {
+                callbackFail(response);
+                reject(response);
+            })
     })
+}
+function get(path,  callback){
+    return new Promise((resolve, reject) => {
+        ajax.get(path)
+            .then((response) => {
+                resolve(response);
+                callback(response);
+                
+            })
+            .catch((response) => {
+                reject(response);
+                callback(response);
+                
+            })
+    })
+}
+function getCustom(path, callback){
+    return new Promise((resolve, reject) => {
+        axios.get(`https://qddz4hkl12.execute-api.us-east-1.amazonaws.com/dev/mails`)
+        .then((response) => {
+            callback(response);
+            resolve(response);
+        })
+        .catch((response) => {
+            callback(response);
+            reject(response);
+        })
+        
+    });
 }
 export default {
     login,
     logout,
     getActiveUser,
-    post
+    post,
+    getCustom,
+    get
 
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 //import { Field, reduxForm } from 'redux-form';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import { connect } from 'react-redux';
 //Actions:
 import { 
@@ -30,8 +30,10 @@ class newComponent extends Component {
                         <Table.Cell>{mail.product_name}</Table.Cell>
                         <Table.Cell>{mail.mailroom_template_name}</Table.Cell>
                         <Table.Cell>
-                            <Icon className="edit" link={true} onClick={() => { this.state.selectMail(mail) }}/>
-                            <Icon className="save" link={true} onClick={this.state.saveMail}/>
+                            <Link to={`/mail/${mail.id}`}>
+                                <Icon className="edit" link={true}/>
+                            </Link>
+                            <Icon className="delete" link={true} onClick={this.state.deleteMail}/>
                         </Table.Cell>
                     </Table.Row>
                 )

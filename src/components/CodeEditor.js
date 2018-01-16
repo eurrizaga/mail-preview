@@ -1,17 +1,18 @@
 import React, { Component } from 'react';
 //import { Field, reduxForm } from 'redux-form';
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 //import { connect } from 'react-redux';
 //Actions:
 import {
   Button,
   Form,
-  Dropdown
+  Dropdown,
+  Input,
+  Label
 } from 'semantic-ui-react';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 class newComponent extends Component {
-    
     render(){
         var languages;
         if (this.props.selectedMail && this.props.selectedMail.mailroom_template_language){
@@ -25,17 +26,31 @@ class newComponent extends Component {
         }
         else
             languages = [];
-        console.log(this.props.selectedMail);
+        
+        const getProductName = () => {
+            if (this.props.selectedMail){
+                return this.props.selectedMail.mailroom_template_name + ' (' + this.props.selectedMail.product_name + ')';
+            }
+            return ' ';
+        }
+        const mail = this.props.selectedMail;
         return (
             <div className="height-100"> 
-                <h2> Código fuente </h2>
-                <Form className="height-100">
+                <h2> {getProductName()}</h2>
+                <Form className="form-edit">
                     <div>
-                        <Button primary>Guardar</Button>
-                        <Dropdown placeholder='Seleccione lenguaje' fluid selection options={languages} onChange={this.props.changeMailLanguage}/>
+                        <Button primary onClick={this.props.saveMail}>Guardar</Button>
+                        <Link className="ui secondary button" to="/">Cancelar</Link>
+                        
+                        <Dropdown placeholder='Seleccione lenguaje' fluid selection options={languages} onChange={this.props.changeMailLanguage} value={mail?mail.selectedLanguage:''}/>
+                        <h3>Asunto</h3>
+                        <Form.Field inline>
+                          <Input fluid placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''}/>
+                        </Form.Field>
+                        <h3>Contenido</h3>
                     </div>
                     <CodeMirror
-                          value={this.props.selectedMail?this.props.selectedMail.mailroom_template_language[this.props.selectedMail.selectedLanguage].content:''}
+                          value={mail?mail.mailroom_template_language[mail.selectedLanguage].content:''}
                           options={{
                             mode: 'xml',
                             lineNumbers: true,
@@ -44,7 +59,7 @@ class newComponent extends Component {
                           onChange={(editor, data, value) => {
                             this.props.handleAreaChange({value});
                           }}
-                          className="height-100"
+                          
                         />
                 </Form>
             </div>
@@ -53,20 +68,4 @@ class newComponent extends Component {
     }
 }
 
-
-//function mapStateToProps(state){
-//    return { posts: state.value }
-//}
-
-
-//export default connect(mapStateToProps)(newComponent);
-//export default connect(mapStateToProps, { fetchPosts  })(newComponent);
-
-
-//    export default reduxForm({
-//    validate,
-//    form: 'PostsNewForm'
-//})(
-//    connect(null, { createPost })(PostsNew)
-//);
 export default newComponent;

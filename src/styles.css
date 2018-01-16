@@ -16,6 +16,16 @@ body {
   margin:10px !important;
   padding: 10px !important;
 }
+.code-editor{
+  overflow-x: auto;
+}
+.form-edit{
+  max-height: calc(100% - 43px);
+}
+.form-edit .react-codemirror2 {
+  overflow-y: auto;
+  max-height: calc(50vh - 140px);
+}
 
 iframe {
   background-color: white;

@@ -5,6 +5,7 @@ import promise from 'redux-promise';
 //import logo from '../logo.svg';
 import reducers from '../reducers';
 import RootComponent from '../components/RootComponent';
+//import MainSection from '../components/sections/MainSection';
 
 const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
@@ -14,6 +15,8 @@ class App extends React.Component {
       <Provider store={createStoreWithMiddleware(reducers)}>
         <div className="App">
             <RootComponent />
+            
+            
         </div>
       </Provider>
     );

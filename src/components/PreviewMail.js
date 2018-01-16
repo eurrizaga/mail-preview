@@ -1,30 +1,4 @@
 import React from 'react';
-/*
-import renderHTML from 'react-render-html';
-
-export default (props) => {
-    //constructor(props){ super(props) }
-    const renderMail = () => {
-        if(props.mail)
-            try{
-                return renderHTML(props.mail); 
-            }
-            catch(e){
-                return renderHTML('');
-            }
-        else{
-            return renderHTML('');
-        }
-    }
-    return (
-            <div> 
-                {renderMail()}
-            </div>
-        
-    )
-
-}
-*/
 
 export default class ExampleContainer extends React.Component {
     constructor(props){
@@ -61,7 +35,7 @@ export default class ExampleContainer extends React.Component {
     _updateIframe() {
         const iframe = this.refs.iframe;
         const document = iframe.contentDocument;
-        const head = document.getElementsByTagName('head')[0];
+        //const head = document.getElementsByTagName('head')[0];
         document.body.innerHTML = this.props.content;
         /*
         this.props.stylesheets.forEach(url => {
@@ -78,7 +52,7 @@ export default class ExampleContainer extends React.Component {
      * This component renders just and iframe
      */
     render() {
-        return <iframe className="height-100" ref="iframe"/>
+        return <iframe title="PreviewMail" className="height-100" ref="iframe"/>
     }
 }
 

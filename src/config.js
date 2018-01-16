@@ -1,5 +1,5 @@
 export default {
-    "apiUrl": "http://192.168.0.117:3000",
+    "apiUrl": "https://qddz4hkl12.execute-api.us-east-1.amazonaws.com/dev",
     "panel_id": 3,
     "product": "beflick_files"
 

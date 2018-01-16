@@ -35,15 +35,28 @@ export function logout(callback){
 }
 
 export function getMailList(callback){
-    const body = {
-        "subEntities": [{
-            "entity": "mailroom_template_language"
-        }]
-    }
-    const payload = webservice.post('/getMailroomTemplate', body, callback);
+    const payload = webservice.get('/mails', callback);
 
     return({
         type: 'MAIL_LIST',
+        payload
+    })
+}
+export function getMailList2(callback){
+    const payload = webservice.getCustom('https://qddz4hkl12.execute-api.us-east-1.amazonaws.com/dev/mails', callback);
+    return({
+        type: 'MAIL_LIST',
+        payload
+    })   
+}
+export function updateMailList(mail, id){
+
+}
+export function saveMail(body, callback, callbackFail){
+    console.log(body);
+    const payload = webservice.post('/mails', body, callback, callbackFail);
+    return({
+        type: 'UPDATE_MAIL',
         payload
     })
 }

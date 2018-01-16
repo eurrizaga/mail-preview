@@ -1,19 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { getMailList, logout } from '../../actions';
 import { 
-        Button,
         Container, 
-        Form, 
-        Grid, 
-        Icon,
-        Table, 
-        TextArea 
+        Grid
     } from 'semantic-ui-react';
-import UserModal from '../UserModal.js';
 import MailTable from '../MailTable';
-import PreviewMail from '../PreviewMail';
-import CodeEditor from '../CodeEditor';
+
+
 
 //Actions:
 //......
@@ -24,16 +17,15 @@ class mainSection extends Component {
         this.state = {};
         this.selectMail = this.selectMail.bind(this);
         
-
     }
 
     componentWillMount(){
-        this.props.getMailList((response) =>{
-            console.log(response.data.data);
-            this.setState({
-                mailList: response.data.data
-            })
-        });
+        // this.props.getMailList((response) =>{
+        //     console.log(response.data.data);
+        //     this.setState({
+        //         mailList: response.data.data
+        //     })
+        // });
     }
 
     componentDidMount(){
@@ -43,7 +35,6 @@ class mainSection extends Component {
         // });
     }
     selectMail(mail){
-        console.log('selectedMail');
         this.setState({
             selectedMail: mail,
             selectedMailContent: mail.content
@@ -55,65 +46,22 @@ class mainSection extends Component {
         });
     }
     render(){
-        const { activeUser } = this.props;
-        //const { meta: { touched, error } } = field;
-        const previewMail = () =>{
-            if (this.state && this.state.selectedMailContent){
-                return (<PreviewMail mail={this.state.selectedMailContent} />)
-            }
-        }
-
-        const handleAreaChange = (event) => {
-            var newState = event.value;
-            //var newState = this.state.selectedMail;
-            //newState.content = event.target.value;
-            this.setState({
-                selectedMailContent: newState,
-                //selectedMail: newState
-            })
-            
-        }
-        const saveMail = () => {
-            var newState = this.state.selectedMail;
-            newState.content = this.state.selectedMailContent;
-            this.setState({
-                selectedMail: newState
-            })
-        }
-        const changeMailLanguage = (event, target) => {
-            var alteredState = this.state.selectedMail;
-            alteredState.selectedLanguage = target.value;
-            this.setState({
-                selectedMail: alteredState
-            })
-
-        }
         var selectedMail = this.state.selectedMail;
         if (selectedMail && !selectedMail.selectedLanguage){
             selectedMail.selectedLanguage = 0;
         }
         return (
                 <div className="App height-100">
-                    <Container className="height-100 auto-flow" style={{maxHeight: '100vh'}}> 
-                        <Grid columns={2} divided className="height-50">
-                            <Grid.Row className="height-100" style={{maxHeight: '500px'}}>
+                    <Container className="height-100 auto-flow" style={{height: '100vh'}}> 
+                        <Grid columns={1} divided className="height-50">
+                            <Grid.Row className="height-100">
                                 <Grid.Column className="auto-flow">
-                                    <MailTable selectMail={this.selectMail} saveMail={saveMail} mailList={this.state.mailList}/>
-                                </Grid.Column>
-                                <Grid.Column className="auto-flow">
-                                    <CodeEditor selectedMail={selectedMail} changeMailLanguage={changeMailLanguage} handleAreaChange={handleAreaChange} />
+                                    <MailTable selectMail={this.selectMail} mailList={this.props.mailList}/>
                                 </Grid.Column>
                             </Grid.Row>
                         </Grid>
-                        <Grid columns={1} divided className="height-50 auto-flow">
-                            <Grid.Column>
-                                {/*previewMail() */}
-                                <h2> Vista previa </h2>
-                                <PreviewMail content={this.state.selectedMailContent?this.state.selectedMailContent:''}/>
-                            </Grid.Column>
-                        </Grid>
                     </Container>
-                    <Button secondary className="logout-button" onClick={logout}>Logout</Button> 
+                    {/*<Button secondary className="logout-button" onClick={logout}>Logout</Button> */}
                 </div>
         );
     }
@@ -130,5 +78,5 @@ function mapStateToProps(state){
 //    connect(null, { createPost })(PostsNew)
 //);
 
-export default connect(mapStateToProps, { getMailList, logout })(mainSection);
+export default connect(mapStateToProps, { })(mainSection);
     

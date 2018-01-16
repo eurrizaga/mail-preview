@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
-import LoginForm from './sections/LoginForm';
+//import LoginForm from './sections/LoginForm';
 import MainSection from './sections/MainSection';
-import PrivateRoute from './PrivateRoute';
-import { getActiveUser } from '../actions';
+import EditSection from './sections/EditSection';
+//import PrivateRoute from './PrivateRoute';
+import { getMailList } from '../actions';
 
 //Actions:
 //......
@@ -16,28 +17,33 @@ class newComponent extends Component {
         this.state = { loading: false }
     }
     componentWillMount(){
+        // this.setState({loading: true});
+        // this.props.getActiveUser((response) => {
+        //     this.setState({loading: false});
+        // });
         this.setState({loading: true});
-        this.props.getActiveUser((response) => {
+        this.props.getMailList((response) =>{
             this.setState({loading: false});
         });
     }
-        
     render(){
+        const renderRouter = () => {
+            return(
+                    <Switch>
+                        {/*<Route path="/login" component={LoginForm} activeUser={this.props.activeUser}/>*/}
+                        <Route path="/mail/:id" component={EditSection} activeUser={this.props.activeUser}/>
+                        <Route path="/" component={MainSection} activeUser={this.props.activeUser}/>
+
+                    </Switch>
+            )
+        }
         const renderFields = () => {
-            if (!this.props.activeUser && (this.props.activeUser !== false))
+            if (this.state.loading)
                 return (
                     <div>Loading...</div>
                 )
             else
-                return(
-                    
-                        <Switch>
-                            <Route path="/login" component={LoginForm} activeUser={this.props.activeUser}/>
-                            <PrivateRoute path="/" component={MainSection} activeUser={this.props.activeUser}/>
-
-                        </Switch>
-                    
-                )
+                return renderRouter()
         }
         return (
             <div> 
@@ -60,7 +66,7 @@ function mapStateToProps(state){
 //})(
 //    connect(null, { createPost })(PostsNew)
 //);
-export default connect(mapStateToProps, { getActiveUser })(newComponent);
+export default connect(mapStateToProps, { getMailList })(newComponent);
     /*
     
     
