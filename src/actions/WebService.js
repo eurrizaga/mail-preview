@@ -128,12 +128,14 @@ function getCustom(path, callback){
     return new Promise((resolve, reject) => {
         axios.get(`https://qddz4hkl12.execute-api.us-east-1.amazonaws.com/dev/mails`)
         .then((response) => {
-            callback(response);
             resolve(response);
+            callback(response);
+            
         })
         .catch((response) => {
-            callback(response);
             reject(response);
+            callback(response);
+            
         })
         
     });

@@ -8,7 +8,8 @@ import {
   Form,
   Dropdown,
   Input,
-  Label
+  Label,
+  Grid
 } from 'semantic-ui-react';
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
@@ -36,31 +37,45 @@ class newComponent extends Component {
         const mail = this.props.selectedMail;
         return (
             <div className="height-100"> 
-                <h2> {getProductName()}</h2>
+                <h2> 
+                    {getProductName()} 
+                    <Button primary onClick={this.props.saveMail}>Guardar</Button>
+                    <Link className="ui secondary button" to="/">Cancelar</Link>  
+                </h2>
                 <Form className="form-edit">
-                    <div>
-                        <Button primary onClick={this.props.saveMail}>Guardar</Button>
-                        <Link className="ui secondary button" to="/">Cancelar</Link>
+                    <Grid columns={2}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <label>Idioma</label>
+                                <Dropdown placeholder='Seleccione lenguaje' selection options={languages} onChange={this.props.changeMailLanguage} value={mail?mail.selectedLanguage:''}/>
+                            </Grid.Column>
+                            <Grid.Column>
+                                <label>Asunto</label>
+                                <Input placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''}/>
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
+                    <Grid columns={1}>
+                        <Grid.Row>
+                            <Grid.Column>
+                                <CodeMirror
+                                      value={mail?mail.mailroom_template_language[mail.selectedLanguage].content:''}
+                                      options={{
+                                        mode: 'xml',
+                                        lineNumbers: true,
+                                        theme: 'material'
+                                      }}
+                                      onChange={(editor, data, value) => {
+                                        this.props.handleAreaChange({value});
+                                      }}
+                                      
+                                    />
+                            </Grid.Column>
+                        </Grid.Row>
+                    </Grid>
                         
-                        <Dropdown placeholder='Seleccione lenguaje' fluid selection options={languages} onChange={this.props.changeMailLanguage} value={mail?mail.selectedLanguage:''}/>
-                        <h3>Asunto</h3>
-                        <Form.Field inline>
-                          <Input fluid placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''}/>
-                        </Form.Field>
-                        <h3>Contenido</h3>
-                    </div>
-                    <CodeMirror
-                          value={mail?mail.mailroom_template_language[mail.selectedLanguage].content:''}
-                          options={{
-                            mode: 'xml',
-                            lineNumbers: true,
-                            theme: 'material'
-                          }}
-                          onChange={(editor, data, value) => {
-                            this.props.handleAreaChange({value});
-                          }}
-                          
-                        />
+
+                                
                 </Form>
             </div>
             

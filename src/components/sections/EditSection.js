@@ -51,9 +51,8 @@ class editSection extends Component {
         const saveMail = () => {
             if (this.props.selectedMail){
                 const mail = this.props.selectedMail.mailroom_template_language[this.state.selectedLanguage];
-                debugger;
                 const req = {
-                    content: mail.content,
+                    content: this.state.selectedMailContent,
                     language_id: mail.language_id,
                     mailroom_template_id: mail.mailroom_template_id,
                     subject: mail.subject,

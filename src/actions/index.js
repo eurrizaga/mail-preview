@@ -50,7 +50,10 @@ export function getMailList2(callback){
     })   
 }
 export function updateMailList(mail, id){
-
+    return({
+        type: 'UPDATE_MAIL_LIST',
+        payload: null
+    })
 }
 export function saveMail(body, callback, callbackFail){
     console.log(body);
