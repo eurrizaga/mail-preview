@@ -14,6 +14,9 @@ import {
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 class newComponent extends Component {
+    onInputChange(term){
+        this.setState({term});
+    }
     render(){
         var languages;
         if (this.props.selectedMail && this.props.selectedMail.mailroom_template_language){
@@ -51,7 +54,7 @@ class newComponent extends Component {
                             </Grid.Column>
                             <Grid.Column>
                                 <label>Asunto</label>
-                                <Input placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''}/>
+                                <Input placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''} onChange={(event) => this.onInputChange(event.target.value)} />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>
@@ -63,7 +66,8 @@ class newComponent extends Component {
                                       options={{
                                         mode: 'xml',
                                         lineNumbers: true,
-                                        theme: 'material'
+                                        theme: 'material',
+                                        lineWrapping: true
                                       }}
                                       onChange={(editor, data, value) => {
                                         this.props.handleAreaChange({value});
