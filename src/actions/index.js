@@ -49,17 +49,22 @@ export function getMailList2(callback){
         payload
     })   
 }
-export function updateMailList(mail, id){
+export function updateMailList(mailList){
     return({
-        type: 'UPDATE_MAIL_LIST',
-        payload: null
+        type: 'MAIL_LIST',
+        payload: mailList
     })
 }
 export function saveMail(body, callback, callbackFail){
-    console.log(body);
     const payload = webservice.post('/mails', body, callback, callbackFail);
     return({
         type: 'UPDATE_MAIL',
+        payload
+    })
+}
+export function setLoader(payload){
+    return ({
+        type:'LOADER',
         payload
     })
 }

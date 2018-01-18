@@ -8,7 +8,7 @@ import MainSection from './sections/MainSection';
 import EditSection from './sections/EditSection';
 //import PrivateRoute from './PrivateRoute';
 import { getMailList } from '../actions';
-
+import { Dimmer, Loader } from 'semantic-ui-react';
 //Actions:
 //......
 class newComponent extends Component {
@@ -26,29 +26,44 @@ class newComponent extends Component {
             this.setState({loading: false});
         });
     }
+    setLoader(value){
+        this.setState({loading: value});
+    }
     render(){
+
+        const showLoader = () => {
+            if (this.state.loading || this.props.loader){
+                return (
+                    <Dimmer active inverted>
+                        <Loader inverted>Loading</Loader>
+                    </Dimmer>
+                )
+            }
+                
+        }
         const renderRouter = () => {
             return(
+                <div>
+                    {showLoader()}
                     <Switch>
                         {/*<Route path="/login" component={LoginForm} activeUser={this.props.activeUser}/>*/}
-                        <Route path="/mail/:id" component={EditSection} activeUser={this.props.activeUser}/>
-                        <Route path="/" component={MainSection} activeUser={this.props.activeUser}/>
+                        <Route path="/mail/:id" component={EditSection} activeUser={this.props.activeUser} setLoader={this.setLoader}/>
+                        <Route path="/" component={MainSection} activeUser={this.props.activeUser} setLoader={this.setLoader}/>
 
                     </Switch>
+                </div>
             )
         }
         const renderFields = () => {
             if (this.state.loading)
-                return (
-                    <div>Loading...</div>
-                )
+                return showLoader()
             else
                 return renderRouter()
         }
         return (
             <div> 
                 <BrowserRouter>
-                    { renderFields() }
+                    { renderRouter() }
                 </BrowserRouter>
             </div>
             
@@ -56,7 +71,10 @@ class newComponent extends Component {
     }
 }
 function mapStateToProps(state){
-    return { activeUser: state.activeUser }
+    return { 
+        activeUser: state.activeUser,
+        loader: state.loader
+    }
 }
 //export default connect(mapStateToProps)(newComponent);
 //export default connect(mapStateToProps, { fetchPosts  })(newComponent);

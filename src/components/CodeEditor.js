@@ -14,9 +14,6 @@ import {
 import {UnControlled as CodeMirror} from 'react-codemirror2';
 
 class newComponent extends Component {
-    onInputChange(term){
-        this.setState({term});
-    }
     render(){
         var languages;
         if (this.props.selectedMail && this.props.selectedMail.mailroom_template_language){
@@ -37,6 +34,7 @@ class newComponent extends Component {
             }
             return ' ';
         }
+        
         const mail = this.props.selectedMail;
         return (
             <div className="height-100"> 
@@ -50,11 +48,11 @@ class newComponent extends Component {
                         <Grid.Row>
                             <Grid.Column>
                                 <label>Idioma</label>
-                                <Dropdown placeholder='Seleccione lenguaje' selection options={languages} onChange={this.props.changeMailLanguage} value={mail?mail.selectedLanguage:''}/>
+                                <Dropdown placeholder='Seleccione lenguaje' selection options={languages} onChange={this.props.confirmLanguageChange} value={mail?mail.selectedLanguage:''}/>
                             </Grid.Column>
                             <Grid.Column>
                                 <label>Asunto</label>
-                                <Input placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''} onChange={(event) => this.onInputChange(event.target.value)} />
+                                <Input placeholder='Subject' value={mail?mail.mailroom_template_language[mail.selectedLanguage].subject: ''} onChange={(event) => this.props.onSubjectChange(event.target.value)} />
                             </Grid.Column>
                         </Grid.Row>
                     </Grid>

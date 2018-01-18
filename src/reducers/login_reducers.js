@@ -5,6 +5,7 @@ export default function(state = {}, action){
         case LOGIN_ACTION:
             console.log(action);
             return state;
+        case 'LOADER': return action.payload;
         default: return state;
     }
 }
